@@ -1,18 +1,18 @@
 import {PatternBuffer} from './PatternBuffer.js';
 import {CircularBuffer} from './CircularBuffer.js';
 
-const canvasSize = {width: 1000, height: 800};
-
 const headerData = [0x00, 0xFF, 0x00, 0xFF];
 const patternLength = 10;
 
+const bufferSize = 600;
+const circularBuffers = new Array(6).fill(0).map(_ => new CircularBuffer(bufferSize));
 const patternBuffer = new PatternBuffer();
-const circularBuffers = new Array(6).fill(0).map(_ => new CircularBuffer(canvasSize.width));
 
 const baudRate = 9600;
 
 let reading = false;
 
+const canvasContainer = document.getElementById("canvas-container");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
@@ -104,7 +104,7 @@ function updateBuffersFromData(data) {
 }
 
 function drawBuffers() {
-    const { width, height } = canvasSize;
+    const { width, height } = canvasContainer.getBoundingClientRect();
 
     canvas.width = width;
     canvas.height = height;
@@ -112,6 +112,7 @@ function drawBuffers() {
     ctx.fillRect(0, 0, width, height);
 
     const graphHeight = height / circularBuffers.length;
+    const scale = width / bufferSize;
     circularBuffers.forEach((buffer, i) => {
         ctx.save();
         ctx.strokeStyle = 'white';
@@ -121,7 +122,7 @@ function drawBuffers() {
         ctx.lineTo(width, graphHeight);
         const data = buffer.getData();
         ctx.moveTo(0, (1 - data[0] / 255) * graphHeight);
-        data.slice(1).forEach((value, j) => ctx.lineTo(j + 1, (1 - value / 255) * graphHeight));
+        data.slice(1).forEach((value, j) => ctx.lineTo((j + 1) * scale, (1 - value / 255) * graphHeight));
         ctx.stroke();
         ctx.restore();
     });

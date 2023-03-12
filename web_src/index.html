@@ -1,27 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WebSerial</title>
     <style>
-        canvas {display: block;}
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        canvas {
+            display: block;
+        }
+        .container {
+            display: block;
+            box-sizing: border-box;
+            height: 100vh;
+        }
+        .content-wrapper {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            gap: 10px;
+        }
+        .controls {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        #canvas-container {
+            flex-grow: 1;
+        }
     </style>
 </head>
+
 <body>
-    <div>
-        <label for="usbVendorId">Vendor ID</label>
-        <input type="number" value=0 id="usbVendorId" readonly />
-        <label for="usbProductId">Product ID</label>
-        <input type="number" value=0 id="usbProductId" readonly />
+    <div class="container">
+        <div class="content-wrapper">
+        <div class="controls">
+            <div class="inputs">
+                <label for="usbVendorId">Vendor ID</label>
+                <input type="number" value=0 id="usbVendorId" readonly />
+                <label for="usbProductId">Product ID</label>
+                <input type="number" value=0 id="usbProductId" readonly />
+            </div>
+            <div class="buttons">
+                <button id="requestPort">Request port</button>
+                <button id="openPort">Open port</button>
+                <button id="closePort">Close port</button>
+            </div>
+        </div>
+        <div id="canvas-container"><canvas id="canvas"></canvas></div>
     </div>
-    <div>
-    <button id="requestPort">Request port</button>
-    <button id="openPort">Open port</button>
-    <button id="closePort">Close port</button>
-    </div>
-    <canvas id="canvas"></canvas>
+</div>
     <script type="module" src="index.js"></script>
 </body>
+
 </html>
