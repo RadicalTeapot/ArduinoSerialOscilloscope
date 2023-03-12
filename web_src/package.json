@@ -1,0 +1,17 @@
+{
+  "name": "webserial",
+  "version": "1.0.0",
+  "description": "",
+  "source": "index.html",
+  "scripts": {
+      "build": "parcel build",
+      "start-https": "parcel --https",
+      "start": "parcel"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}
